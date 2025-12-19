@@ -1,29 +1,23 @@
-from pathlib import Path
+# telecom_customer_churn_prediction/plots.py
 
-from loguru import logger
-from tqdm import tqdm
-import typer
+import matplotlib.pyplot as plt
+import seaborn as sns
+import os
 
-from telecom_customer_churn_prediction.config import FIGURES_DIR, PROCESSED_DATA_DIR
+def plot_churn_distribution(customers_df, column='churn_prob', save_path=None):
+    plt.figure(figsize=(8,5))
+    sns.histplot(customers_df[column], bins=20, kde=True)
+    plt.title("Churn Probability Distribution")
+    plt.xlabel("Churn Probability")
+    plt.ylabel("Count")
+    if save_path:
+        plt.savefig(save_path, bbox_inches='tight')
+    plt.show()
 
-app = typer.Typer()
-
-
-@app.command()
-def main(
-    # ---- REPLACE DEFAULT PATHS AS APPROPRIATE ----
-    input_path: Path = PROCESSED_DATA_DIR / "dataset.csv",
-    output_path: Path = FIGURES_DIR / "plot.png",
-    # -----------------------------------------
-):
-    # ---- REPLACE THIS WITH YOUR OWN CODE ----
-    logger.info("Generating plot from data...")
-    for i in tqdm(range(10), total=10):
-        if i == 5:
-            logger.info("Something happened for iteration 5.")
-    logger.success("Plot generation complete.")
-    # -----------------------------------------
-
-
-if __name__ == "__main__":
-    app()
+def plot_risk_tiers(customers_df, column='risk_tier', save_path=None):
+    plt.figure(figsize=(6,4))
+    sns.countplot(x=column, data=customers_df, order=['Low','Medium','High'])
+    plt.title("Customer Risk Tier Distribution")
+    if save_path:
+        plt.savefig(save_path, bbox_inches='tight')
+    plt.show()

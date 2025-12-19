@@ -1,29 +1,29 @@
-from pathlib import Path
+import pandas as pd
+import torch
+from sklearn.preprocessing import StandardScaler
+from torch.utils.data import TensorDataset, DataLoader
 
-from loguru import logger
-from tqdm import tqdm
-import typer
+def load_features_labels(X_file, y_file=None):
+    X_df = pd.read_csv(X_file)
+    X = X_df.values
+    y = None
+    if y_file:
+        y_df = pd.read_csv(y_file)
+        y = y_df.values
+    return X, y
 
-from telecom_customer_churn_prediction.config import PROCESSED_DATA_DIR, RAW_DATA_DIR
+def preprocess_features(X, scaler=None):
+    if scaler is None:
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X)
+    else:
+        X_scaled = scaler.transform(X)
+    X_tensor = torch.tensor(X_scaled, dtype=torch.float32)
+    return X_tensor, scaler
 
-app = typer.Typer()
-
-
-@app.command()
-def main(
-    # ---- REPLACE DEFAULT PATHS AS APPROPRIATE ----
-    input_path: Path = RAW_DATA_DIR / "customer_churn.csv",
-    output_path: Path = PROCESSED_DATA_DIR / "dataset.csv",
-    # ----------------------------------------------
-):
-    # ---- REPLACE THIS WITH YOUR OWN CODE ----
-    logger.info("Processing dataset...")
-    for i in tqdm(range(10), total=10):
-        if i == 5:
-            logger.info("Something happened for iteration 5.")
-    logger.success("Processing dataset complete.")
-    # -----------------------------------------
-
-
-if __name__ == "__main__":
-    app()
+def create_dataloader(X_tensor, y_tensor=None, batch_size=32, shuffle=True):
+    if y_tensor is not None:
+        dataset = TensorDataset(X_tensor, y_tensor)
+    else:
+        dataset = TensorDataset(X_tensor)
+    return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)
