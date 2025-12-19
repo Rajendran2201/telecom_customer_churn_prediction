@@ -1,0 +1,23 @@
+artifact_path: /Users/rajendran/Desktop/churn_prediction/telecom_customer_churn_prediction/notebooks/mlruns/2/models/m-a2abcc1f66aa46519d798b467549ac04/artifacts
+flavors:
+  python_function:
+    config:
+      device: null
+    data: data
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.pytorch
+    pickle_module_name: mlflow.pytorch.pickle_module
+    python_version: 3.11.7
+  pytorch:
+    code: null
+    model_data: data
+    pytorch_version: 2.9.1
+mlflow_version: 3.7.0
+model_id: m-a2abcc1f66aa46519d798b467549ac04
+model_size_bytes: 19033
+model_uuid: m-a2abcc1f66aa46519d798b467549ac04
+prompts: null
+run_id: cdd54c743a9548a5bab44556b7ba53f6
+utc_time_created: '2025-12-19 09:50:53.663452'

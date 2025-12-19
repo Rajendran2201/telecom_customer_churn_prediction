@@ -14,6 +14,8 @@ ruff
 scikit-learn==1.4.2
 tqdm
 typer
-tensorflow==2.15.0
+torch
+torchvision
+torchaudio
 ipykernel
 -e .
