@@ -4,13 +4,16 @@ loguru
 matplotlib
 mkdocs
 notebook
-numpy
-pandas
+numpy==1.26.4
+pandas==2.1.4
+seaborn
 pip
 pytest
 python-dotenv
 ruff
-scikit-learn
+scikit-learn==1.4.2
 tqdm
 typer
+tensorflow==2.15.0
+ipykernel
 -e .
